@@ -4,6 +4,7 @@
         <input @click="check(index)" class="checkbox" type="checkbox"  />
     </div>
     <p v-bind:class="{'checked' : task.checked }">{{task.name}}</p>
+     <p>{{task.checked}}</p>
     <i class="far fa-trash-alt poubelle" @click="remover(index)"></i>
 </div>
     

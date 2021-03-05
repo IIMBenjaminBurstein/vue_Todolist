@@ -13,6 +13,7 @@
            <p class="card-header-title" v-else>   
              {{tasks.length}} tâche en cour
             </p>
+           
         </header>
         <div class="card-content">
             <div >
@@ -80,13 +81,11 @@ import todoList from './todo-list'
                     this.tasks.splice(0);
                 },
                 removeAllTaskChecked(){
-                    let index = 0
-                    this.tasks.forEach (task=> {
-                      if(task.checked){
-                          this.tasks.splice(index, 1)
-                      }
-                        index++;
-                    });
+                    for(let index = 0 ; index < this.tasks.length ; index++){
+                        if(this.tasks[index].checked){
+                            this.tasks.splice(index, 1);
+                        }
+                    }   
                 }
             }
         }
