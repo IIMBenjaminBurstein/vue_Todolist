@@ -7,12 +7,25 @@
             <p class="card-header-title title">
                 {{titre}}
             </p>
-            <p class="card-header-title">   
-             {{count}} tâches en cour
+            <p class="card-header-title" v-if="tasks.length > 1">   
+             {{tasks.length}} tâches en cour
+            </p>
+           <p class="card-header-title" v-else>   
+             {{tasks.length}} tâche en cour
             </p>
         </header>
         <div class="card-content">
-            <newTodo class="addTask" @sendTask="addTask"   ></newTodo>
+            <div >
+                 <newTodo class="addTask" @sendTask="addTask"></newTodo>
+            </div>
+            <div>
+                   <button v-if="tasks.length > 1"  @click="removeAllTask" class="button is-danger mt-3">Supprimer toutes les tâches</button>
+            </div>
+             <div>
+                   <button v-if="tasks.length > 1"  @click="removeAllTaskChecked" class="button is-warning mt-3"  >Supprimer toutes les tâches terminé</button>
+            </div>
+         
+            
         </div>
        <todoList :tasks="tasks" @checkEvent="checkTask" @delete="removeTask"></todoList>
     </div>
@@ -36,9 +49,8 @@ import todoList from './todo-list'
             },
             data() {
                 return{
-                titre : ' VueJS tutorial  TodoList',
                 tasks: [],
-                count: 0,
+                titre : ' VueJS tutorial  TodoList',
                 }
             },
             components : { 
@@ -51,16 +63,30 @@ import todoList from './todo-list'
                             checked : false,
                             name: name
                         }
-                        this.tasks.push(newTask);
-                        this.count += 1;             
+                        this.tasks.push(newTask);          
                 },
                 checkTask(index){
                    this.tasks[index].checked =  !this.tasks[index].checked
               
                 },
                 removeTask(index){
+                    // remove task if check
+                    // if( this.tasks[index].checked){
+                    //     this.tasks.splice(index, 1);
+                    // }
                     this.tasks.splice(index, 1);
-                    this.count--;
+                },
+                removeAllTask(){
+                    this.tasks.splice(0);
+                },
+                removeAllTaskChecked(){
+                    let index = 0
+                    this.tasks.forEach (task=> {
+                      if(task.checked){
+                          this.tasks.splice(index, 1)
+                      }
+                        index++;
+                    });
                 }
             }
         }
@@ -74,6 +100,7 @@ import todoList from './todo-list'
     }
     .card-content{
         text-align: center;
+        flex-flow: column wrap;
     }
     .title{
         color: rgb(7, 206, 7) !important;

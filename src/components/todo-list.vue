@@ -1,7 +1,7 @@
 <template>
 <div class="todolist"  v-for="(task, index) in tasks" :key="(task, index)">
     <div class="round">
-        <input v-on:click="check(index)" class="checkbox" type="checkbox"  />
+        <input @click="check(index)" class="checkbox" type="checkbox"  />
     </div>
     <p v-bind:class="{'checked' : task.checked }">{{task.name}}</p>
     <i class="far fa-trash-alt poubelle" @click="remover(index)"></i>
@@ -12,7 +12,7 @@
 <script>
 export default {
     name: 'TodoList',
-    props: ['tasks'],
+    props: ['tasks'],   
     methods: {
       check(index){
        this.$emit('checkEvent', index);
@@ -21,12 +21,12 @@ export default {
       remover(index){
         this.$emit('delete', index)
       }
+        }
     }
-}
 
-</script>
-<style scoped>
-.poubelle{
+    </script>
+    <style scoped>
+    .poubelle{
     color: red;
     font-size: 40px;
 }
